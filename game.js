@@ -1,28 +1,22 @@
-const buttonColours = ["red", "blue", "green", "yellow"];
+var buttonColours = ["red", "blue", "green", "yellow"];
 
-const gamePattern = [];
-let userClickedPattern = [];
+var gamePattern = [];
+var userClickedPattern = [];
 
-let started = false;
-let level = 0;
+var started = false;
+var level = 0;
 
-// Function to start the game
-function startGame() {
+$(document).keypress(function() {
   if (!started) {
     $("#level-title").text("Level " + level);
     nextSequence();
     started = true;
   }
-}
+});
 
-// Event listener for keypress event on the document (for computers)
-$(document).keypress(startGame);
+$(".btn").on("click touchstart", function() {
 
-// Event listener for tap event on the document (for mobile devices)
-$(document).on("tap", startGame);
-
-$(".btn").click(function() {
-  const userChosenColour = $(this).attr("id");
+  var userChosenColour = $(this).attr("id");
   userClickedPattern.push(userChosenColour);
 
   playSound(userChosenColour);
@@ -32,6 +26,7 @@ $(".btn").click(function() {
 });
 
 function checkAnswer(currentLevel) {
+
     if (gamePattern[currentLevel] === userClickedPattern[currentLevel]) {
       if (userClickedPattern.length === gamePattern.length){
         setTimeout(function () {
@@ -51,12 +46,13 @@ function checkAnswer(currentLevel) {
     }
 }
 
+
 function nextSequence() {
   userClickedPattern = [];
   level++;
   $("#level-title").text("Level " + level);
-  const randomNumber = Math.floor(Math.random() * 4);
-  const randomChosenColour = buttonColours[randomNumber];
+  var randomNumber = Math.floor(Math.random() * 4);
+  var randomChosenColour = buttonColours[randomNumber];
   gamePattern.push(randomChosenColour);
 
   $("#" + randomChosenColour).fadeIn(100).fadeOut(100).fadeIn(100);
@@ -71,12 +67,12 @@ function animatePress(currentColor) {
 }
 
 function playSound(name) {
-  const audio = new Audio("sounds/" + name + ".mp3");
+  var audio = new Audio("sounds/" + name + ".mp3");
   audio.play();
 }
 
 function startOver() {
   level = 0;
-  gamePattern.length = 0;
+  gamePattern = [];
   started = false;
 }
