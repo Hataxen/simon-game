@@ -14,7 +14,6 @@ $(document).keypress(function() {
   }
 });
 
-// Add event listener for touchstart event
 $(document).on("touchstart", function() {
   if (!started) {
     $("#level-title").text("Level " + level);
